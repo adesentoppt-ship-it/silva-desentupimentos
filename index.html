@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Silva Desentupimentos</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
 <style>
   :root{
     --ink:#14211f;
@@ -134,11 +134,12 @@
   }
   .hero-content .tag{
     color:var(--amber);
-    font-size:1rem;
+    font-size:1.35rem;
     font-weight:700;
-    letter-spacing:.1em;
+    letter-spacing:.08em;
   }
-  @media (max-width:640px){ .hero-content .tag{ font-size:.86rem; } }
+  .hero-content .tag::before{ width:10px; height:10px; }
+  @media (max-width:640px){ .hero-content .tag{ font-size:1.05rem; } }
   .hero-content h1{
     font-size:clamp(2.6rem,8vw,5rem);
     margin-top:10px;
