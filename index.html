@@ -8,6 +8,20 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  // Modo de consentimento (UE): negado por defeito ate o visitante aceitar
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied',
+    ad_personalization: 'denied', analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  try {
+    if (localStorage.getItem('cookie-consent') === 'granted') {
+      gtag('consent', 'update', {
+        ad_storage: 'granted', ad_user_data: 'granted',
+        ad_personalization: 'granted', analytics_storage: 'granted'
+      });
+    }
+  } catch (e) {}
   gtag('js', new Date());
   gtag('config', 'AW-18370515943');
   // Conversao: clique no numero de telefone (tel:)
@@ -358,6 +372,25 @@
     white-space:nowrap;
   }
   .callbar .btn svg{ width:17px; height:17px; }
+  .cookie-banner{
+    position:fixed; left:12px; right:12px;
+    bottom:calc(76px + env(safe-area-inset-bottom,0px));
+    z-index:60; max-width:560px; margin-inline:auto;
+    background:var(--paper); color:var(--ink);
+    border:1px solid var(--line); border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    padding:14px 16px; font-size:.88rem; line-height:1.45;
+    display:none;
+  }
+  .cookie-banner.show{ display:block; }
+  .cookie-banner p{ margin:0 0 10px; }
+  .cookie-banner .cb-actions{ display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+  .cookie-banner button{
+    font:600 .85rem 'IBM Plex Mono', monospace; cursor:pointer;
+    border-radius:999px; padding:9px 16px; border:1px solid var(--line);
+    background:transparent; color:var(--ink);
+  }
+  .cookie-banner button.cb-accept{ background:var(--amber); color:var(--amber-ink); border-color:var(--amber); }
 </style>
 </head>
 <body>
@@ -480,6 +513,35 @@
 
 <script>
   try{ document.getElementById('year').textContent = new Date().getFullYear(); }catch(e){}
+</script>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookies">
+  <p>Usamos cookies para medir o resultado dos nossos anúncios. Pode aceitar ou recusar.</p>
+  <div class="cb-actions">
+    <button type="button" class="cb-reject" id="cb-reject">Recusar</button>
+    <button type="button" class="cb-accept" id="cb-accept">Aceitar</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var b = document.getElementById('cookie-banner');
+    var saved = null;
+    try { saved = localStorage.getItem('cookie-consent'); } catch(e){}
+    if (!saved) b.classList.add('show');
+    function choose(v){
+      try { localStorage.setItem('cookie-consent', v); } catch(e){}
+      if (v === 'granted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted', ad_user_data: 'granted',
+          ad_personalization: 'granted', analytics_storage: 'granted'
+        });
+      }
+      b.classList.remove('show');
+    }
+    document.getElementById('cb-accept').addEventListener('click', function(){ choose('granted'); });
+    document.getElementById('cb-reject').addEventListener('click', function(){ choose('denied'); });
+  })();
 </script>
 
 </body>
