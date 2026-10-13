@@ -18,10 +18,14 @@
   gtag('set', 'url_passthrough', true);
   gtag('js', new Date());
   gtag('config', 'AW-18370515943');
-  // Conversao: clique no telefone (tel:) ou no WhatsApp (wa.me)
+  // Conversoes separadas: ligacao (tel:) e WhatsApp (wa.me)
   document.addEventListener('click', function(e){
-    var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href*="wa.me/"]');
-    if (a) { gtag('event', 'conversion', {'send_to': 'AW-18370515943/nvhtCOm824odEOen37dE'}); }
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="tel:"]')) {
+      gtag('event', 'conversion', {'send_to': 'AW-18370515943/nvhtCOm824odEOen37dE'}); // Clique telefone site - Silva
+    } else if (e.target.closest('a[href*="wa.me/"]')) {
+      gtag('event', 'conversion', {'send_to': 'AW-18370515943/G0UbCPrwx5sdEOen37dE'}); // WhatsApp site - Silva
+    }
   }, true);
 </script>
 <title>Silva Desentupimentos | Desentupimentos no Porto, Aveiro e Braga</title>
