@@ -37,7 +37,7 @@
 <meta property="og:description" content="Chegamos em 30 minutos, não partimos paredes e fazemos relatório para seguradora. Ligue 966 475 288.">
 <meta property="og:image" content="https://silvadesentupimento.pt/topo-esgoto.jpg">
 <meta property="og:locale" content="pt_PT">
-<meta name="theme-color" content="#0f3d3a">
+<meta name="theme-color" content="#0f5a2a">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -48,7 +48,7 @@
  "description": "Desentupimentos de esgotos, cozinhas e fossas no Porto, Aveiro e Braga. Inspeção com câmera de vídeo e relatório para seguradora.",
  "url": "https://silvadesentupimento.pt/",
  "telephone": "+351966475288",
- "logo": "https://silvadesentupimento.pt/logo.png",
+ "logo": "https://silvadesentupimento.pt/logo-verde.png",
  "image": [
   "https://silvadesentupimento.pt/topo-esgoto.jpg",
   "https://silvadesentupimento.pt/trabalho-1.jpg"
@@ -207,12 +207,12 @@
     --ink-soft:#4b5a55;
     --paper:#eef1ea;
     --paper-2:#e2e7db;
-    --teal:#0f3d3a;
-    --teal-2:#175048;
-    --amber:#ffb400;
-    --amber-ink:#2b1900;
+    --teal:#0f5a2a;
+    --teal-2:#15803a;
+    --amber:#f7c400;
+    --amber-ink:#2a2200;
     --line:#d3d8c8;
-    --on-teal:#dce9e6;
+    --on-teal:#e3f1e6;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -220,9 +220,9 @@
       --ink-soft:#a9b8b1;
       --paper:#0c1513;
       --paper-2:#101b18;
-      --teal:#0a2b28;
-      --teal-2:#123c37;
-      --amber:#ffc233;
+      --teal:#0b3a1c;
+      --teal-2:#126b31;
+      --amber:#f7c400;
       --amber-ink:#241400;
       --line:#213530;
       --on-teal:#c9dbd6;
@@ -233,9 +233,9 @@
     --ink-soft:#a9b8b1;
     --paper:#0c1513;
     --paper-2:#101b18;
-    --teal:#0a2b28;
-    --teal-2:#123c37;
-    --amber:#ffc233;
+    --teal:#0b3a1c;
+    --teal-2:#126b31;
+    --amber:#f7c400;
     --amber-ink:#241400;
     --line:#213530;
     --on-teal:#c9dbd6;
@@ -637,11 +637,36 @@
   .pula{ animation:pular 2.6s ease-in-out infinite, onda 2.6s ease-out infinite; will-change:transform; }
   @media (prefers-reduced-motion: reduce){ .pula{ animation:none; } }
 
+  /* ---------- topo claro com o tecnico ---------- */
+  .hero{ background:#f6f6f6; border:1px solid var(--line); border-top:none; }
+  .hero::after{ display:none; }
+  .hero img.mascote{
+    position:absolute; inset:auto 2% 0 auto; width:auto; height:94%; max-height:680px;
+    object-fit:contain; object-position:bottom; opacity:1; filter:none;
+    -webkit-mask-image:linear-gradient(to right, transparent 0, #000 14%), linear-gradient(to bottom, transparent 0, #000 4%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to right, transparent 0, #000 14%), linear-gradient(to bottom, transparent 0, #000 4%);
+    mask-composite:intersect;
+  }
+  .hero-content{ color:#14211f; }
+  .hero-content h1{ color:#14211f; }
+  .hero-content h1 .line2, .hero-content h1 .kw{ color:#15803a; }
+  .hero-sub{ color:#3d4a45; max-width:44ch; }
+  .hero-247{ color:#3d4a45; }
+  .hero-247 b{ color:#15803a; }
+  .hero-actions{ max-width:560px; }
+  @media (max-width:900px){ .hero img.mascote{ height:82%; inset:auto 0 0 auto; } }
+  @media (max-width:760px){
+    .hero{ flex-direction:column; align-items:stretch; min-height:0; }
+    .hero-content{ padding-bottom:0; }
+    .hero-content{ order:1; }
+    .hero img.mascote{ order:2; position:relative; inset:auto; height:auto; width:46%; max-width:200px; margin:-6px 4% 0 auto; }
+  }
 </style>
 </head>
 <body>
 <header class="masthead wrap">
-  <a class="logo-chip" href="/" aria-label="Silva Desentupimentos — início"><img src="logo.png" width="480" height="266" alt="Silva Desentupimentos"></a>
+  <a class="logo-chip" href="/" aria-label="Silva Desentupimentos — início"><img src="logo-verde.png" width="520" height="243" alt="Silva Desentupimentos"></a>
   <div class="mh-right">
     <span class="mh-zones">PORTO · AVEIRO · BRAGA</span>
     <a class="mh-call" href="tel:+351966475288"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="t">966 475 288</span></a>
@@ -649,7 +674,7 @@
 </header>
 
 <section class="hero">
-  <img src="topo-esgoto.jpg" srcset="topo-esgoto-m.jpg 700w, topo-esgoto.jpg 1400w" sizes="100vw" fetchpriority="high" alt="Caixa de esgoto entupida antes da intervenção">
+  <img class="mascote" src="mascote.jpg" width="607" height="1339" fetchpriority="high" alt="Técnico da Silva Desentupimentos com máquina de desentupir">
   <div class="hero-content">
     <h1><span class="kw">Desentupimentos no Porto, Aveiro e Braga</span>Entupiu?<span class="line2">Resolvemos hoje.</span></h1>
     <p class="hero-sub">Esgotos, fossas e cozinhas — com máquina profissional e inspeção por câmera de vídeo para mostrar exatamente onde está o problema.</p>
@@ -804,7 +829,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <span class="logo-chip"><img src="logo.png" width="480" height="266" alt="Silva Desentupimentos" loading="lazy"></span>
+        <span class="logo-chip"><img src="logo-verde.png" width="520" height="243" alt="Silva Desentupimentos" loading="lazy"></span>
         <div class="foot-sub" style="margin-top:10px">Desentupimentos de esgotos, cozinhas e fossas.</div>
       </div>
       <div>
