@@ -32,7 +32,10 @@
     if (a) { gtag('event', 'conversion', {'send_to': 'AW-18370515943/nvhtCOm824odEOen37dE'}); }
   }, true);
 </script>
-<title>Silva Desentupimentos</title>
+<title>Silva Desentupimentos | Desentupimentos no Porto, Aveiro e Braga</title>
+<meta name="description" content="Desentupimentos de esgotos, cozinhas e fossas no Porto, Aveiro e Braga. Chegamos em 30 minutos, não partimos paredes e fazemos relatório com vídeo para seguradora. Ligue 910 451 649.">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
 <style>
   :root{
@@ -115,21 +118,24 @@
     justify-content:space-between;
     gap:12px;
   }
-  .masthead .wordmark{
-    font-family:'Oswald', sans-serif;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    font-size:1.05rem;
-  }
-  .masthead .wordmark span{ color:var(--amber); }
-  .masthead .zones{
+  .logo-chip{ background:#fff; border-radius:12px; padding:6px 10px; display:inline-flex; box-shadow:0 1px 0 rgba(0,0,0,.06); }
+  .logo-chip img{ height:58px; width:auto; }
+  .mh-right{ display:flex; align-items:center; gap:14px; }
+  .mh-zones{
     font-family:'IBM Plex Mono', monospace;
     font-size:.78rem;
     color:var(--ink-soft);
     letter-spacing:.04em;
   }
-  @media (max-width:640px){ .masthead .zones{ display:none; } }
+  .mh-call{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--amber); color:var(--amber-ink);
+    font:600 .92rem 'IBM Plex Mono', monospace;
+    padding:9px 14px; border-radius:999px; text-decoration:none; white-space:nowrap;
+  }
+  .mh-call svg{ width:16px; height:16px; }
+  @media (max-width:760px){ .mh-zones{ display:none; } }
+  @media (max-width:420px){ .mh-call .t{ display:none; } .logo-chip img{ height:40px; } }
 
   /* ---------- hero ---------- */
   .hero{
@@ -374,6 +380,78 @@
     white-space:nowrap;
   }
   .callbar .btn svg{ width:17px; height:17px; }
+  /* ---------- hero buttons ---------- */
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+  .hero-actions .hero-plate{ margin-top:0; }
+  .wa-plate{ background:#25d366 !important; color:#06321a !important; }
+  .hero-247{ margin-top:14px; font-family:'IBM Plex Mono', monospace; font-size:.85rem; color:#d8dccf; letter-spacing:.03em; }
+  .hero-247 b{ color:var(--amber); }
+
+  /* ---------- trust strip ---------- */
+  .trust{ padding-block:34px 10px; }
+  .trust-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .trust-item{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:14px;
+  }
+  .trust-item .ic{
+    flex:none; width:34px; height:34px; border-radius:9px; background:var(--amber); color:var(--amber-ink);
+    display:grid; place-items:center;
+  }
+  .trust-item .ic svg{ width:19px; height:19px; }
+  .trust-item b{ display:block; font-size:1rem; color:var(--ink); }
+  .trust-item span{ display:block; font-size:.86rem; color:var(--ink-soft); margin-top:2px; line-height:1.4; }
+  @media (max-width:860px){ .trust-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .trust-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- gallery ---------- */
+  .gallery{ padding-block:46px 10px; }
+  .gallery h2, .faq h2{ font-size:clamp(1.8rem,4vw,2.6rem); margin-top:10px; }
+  .gallery .lead, .faq .lead{ margin-top:10px; max-width:56ch; }
+  .gal-grid{ margin-top:24px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .gal-grid figure{ margin:0; border-radius:12px; overflow:hidden; aspect-ratio:3/4; border:1px solid var(--line); background:var(--paper-2); }
+  .gal-grid img{ width:100%; height:100%; object-fit:cover; }
+  @media (max-width:640px){ .gal-grid{ grid-template-columns:1fr 1fr; } }
+
+  /* ---------- faq ---------- */
+  .faq{ padding-block:46px 10px; }
+  .faq-list{ margin-top:22px; border-top:1px solid var(--line); }
+  .faq details{ border-bottom:1px solid var(--line); padding:16px 2px; }
+  .faq summary{
+    cursor:pointer; list-style:none; font-weight:600; font-size:1.05rem; color:var(--ink);
+    display:flex; justify-content:space-between; gap:14px; align-items:center;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{ content:"+"; font:600 1.4rem 'IBM Plex Mono', monospace; color:var(--amber); flex:none; }
+  .faq details[open] summary::after{ content:"\2212"; }
+  .faq details p{ margin-top:10px; max-width:70ch; }
+
+  /* ---------- review cta ---------- */
+  .review-cta{
+    margin-top:46px; border:1px solid var(--line); border-radius:14px; padding:20px;
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; background:var(--paper-2);
+  }
+  .review-cta .stars{ color:var(--amber); font-size:1.2rem; letter-spacing:2px; }
+  .review-cta b{ display:block; color:var(--ink); font-size:1.05rem; margin-top:2px; }
+  .review-cta a{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    border:1px solid var(--ink); color:var(--ink); border-radius:999px; padding:10px 16px;
+    font:600 .88rem 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- footer extras ---------- */
+  footer .foot-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:22px; width:100%; }
+  footer h4{ margin:0 0 8px; font:600 .78rem 'IBM Plex Mono', monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); }
+  footer ul{ list-style:none; padding:0; margin:0; line-height:1.9; }
+  footer a{ text-decoration:none; }
+  footer .copy{ width:100%; border-top:1px solid var(--line); padding-top:14px; margin-top:6px; font-size:.8rem; }
+  @media (max-width:760px){ footer .foot-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- callbar whatsapp ---------- */
+  .callbar .btns{ display:flex; gap:8px; }
+  .callbar .btn.wa{ background:#25d366; color:#06321a; }
+  @media (max-width:380px){ .callbar .btn{ padding:11px 13px; font-size:.88rem; } }
+
   .cookie-banner{
     position:fixed; left:12px; right:12px;
     bottom:calc(76px + env(safe-area-inset-bottom,0px));
@@ -397,8 +475,11 @@
 </head>
 <body>
 <header class="masthead wrap">
-  <div class="wordmark">Silva <span>Desentupimentos</span></div>
-  <div class="zones mono">PORTO · AVEIRO · BRAGA</div>
+  <a class="logo-chip" href="/" aria-label="Silva Desentupimentos — início"><img src="logo.png" width="480" height="266" alt="Silva Desentupimentos"></a>
+  <div class="mh-right">
+    <span class="mh-zones">PORTO · AVEIRO · BRAGA</span>
+    <a class="mh-call" href="tel:+351910451649"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="t">910 451 649</span></a>
+  </div>
 </header>
 
 <section class="hero">
@@ -406,17 +487,37 @@
   <div class="hero-content">
     <h1>Entupiu?<span class="line2">Resolvemos hoje.</span></h1>
     <p class="hero-sub">Esgotos, fossas e cozinhas — com máquina profissional e inspeção por câmera de vídeo para mostrar exatamente onde está o problema.</p>
-    <a class="hero-plate" href="tel:+351910451649">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <span>
-        <span class="num">910 451 649</span><br>
-        <span class="lbl">Ligar agora</span>
-      </span>
-    </a>
+    <div class="hero-actions">
+      <a class="hero-plate" href="tel:+351910451649">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>
+          <span class="num">910 451 649</span><br>
+          <span class="lbl">Ligar agora</span>
+        </span>
+      </a>
+      <a class="hero-plate wa-plate" href="https://wa.me/351910451649?text=Ol%C3%A1%2C%20preciso%20de%20um%20desentupimento." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.52 3.97 1.52 5.69L.55 23.63l6.07-1.59a11.36 11.36 0 0 0 5.42 1.38h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg>
+        <span>
+          <span class="num">WhatsApp</span><br>
+          <span class="lbl">Enviar mensagem</span>
+        </span>
+      </a>
+    </div>
+    <p class="hero-247">Atendimento <b>24 horas</b> · Chegamos em <b>30 minutos</b></p>
   </div>
 </section>
 
 <main class="wrap">
+  <section class="trust" aria-label="Porque escolher a Silva">
+    <div class="trust-grid">
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><div><b>Chegamos em 30 minutos</b><span>Equipa pronta para sair para urgências.</span></div></div>
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></span><div><b>Não partimos paredes</b><span>Desentupimos sem obras nem estragos em casa.</span></div></div>
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><div><b>Relatório para seguradora</b><span>Inspeção com câmera de vídeo e relatório detalhado.</span></div></div>
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><div><b>Garantia no serviço</b><span>Trabalho feito com garantia.</span></div></div>
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></span><div><b>Fatura com NIF</b><span>Emitimos fatura em todos os serviços.</span></div></div>
+      <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-8-8"/><path d="M12 8v4l3 2M17 3v4h4"/></svg></span><div><b>Orçamento sem compromisso</b><span>Sabe o preço antes de começarmos.</span></div></div>
+    </div>
+  </section>
   <section class="process" id="como-funciona">
     <p class="tag">Como funciona</p>
     <div class="process-row">
@@ -465,6 +566,21 @@
     </div>
   </section>
 
+
+  <section class="gallery" id="trabalhos">
+    <p class="tag">Trabalhos reais</p>
+    <h2>O nosso trabalho no dia a dia</h2>
+    <p class="lead">Fotografias de intervenções feitas pela nossa equipa em casas e caixas de esgoto da região.</p>
+    <div class="gal-grid">
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-1.jpg" alt="Técnico a desentupir a canalização de uma cozinha com máquina profissional"></figure>
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-2.jpg" alt="Máquina de desentupimento e cabo de mola preparados numa cozinha"></figure>
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-3.jpg" alt="Desentupimento de um ralo de chão com máquina rotativa"></figure>
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-4.jpg" alt="Técnico com luvas a operar a máquina de desentupimento"></figure>
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-5.jpg" alt="Caixa de esgoto entupida com gordura acumulada"></figure>
+      <figure><img loading="lazy" decoding="async" width="600" height="800" src="trabalho-6.jpg" alt="Caixa de esgoto cheia antes do desentupimento"></figure>
+    </div>
+  </section>
+
   <section class="zones" id="mesmo-dia">
     <div class="wrap">
       <p class="tag">Zona de atendimento</p>
@@ -479,6 +595,24 @@
     </div>
   </section>
 
+
+  <section class="faq" id="perguntas">
+    <p class="tag">Perguntas frequentes</p>
+    <h2>Dúvidas comuns</h2>
+    <div class="faq-list">
+      <details><summary>Em quanto tempo chegam?</summary><p>Chegamos em 30 minutos. Ligue para o 910 451 649 e diga-nos onde está.</p></details>
+      <details><summary>Vão ter de partir paredes ou chão?</summary><p>Não. Usamos máquina rotativa profissional e câmera de inspeção, que entram pela própria canalização. Desentupimos sem obras nem estragos em casa.</p></details>
+      <details><summary>Fazem relatório para a seguradora?</summary><p>Sim. Filmamos o interior da tubagem com câmera de vídeo e entregamos um relatório detalhado para apresentar à sua seguradora.</p></details>
+      <details><summary>Quanto custa um desentupimento?</summary><p>Depende do tipo de entupimento e do local. Ligue e descreva o problema: damos o orçamento sem compromisso, antes de começar o trabalho.</p></details>
+      <details><summary>Emitem fatura?</summary><p>Sim, emitimos fatura com NIF em todos os serviços.</p></details>
+      <details><summary>Que zonas servem?</summary><p>Porto e concelhos vizinhos, Aveiro e Braga.</p></details>
+    </div>
+    <div class="review-cta">
+      <div><span class="stars" aria-hidden="true">★★★★★</span><b>Já foi nosso cliente? Deixe a sua avaliação no Google.</b></div>
+      <a href="https://www.google.com/maps/place/Silva+Desentupimento+24h/@41.1932644,-8.6188598,17z/data=!4m6!3m5!1s0xd24655ab5659399:0xe3ddca761692710f!8m2!3d41.1932644!4d-8.6188598!16s%2Fg%2F11njnjc6kx" target="_blank" rel="noopener">Avaliar no Google</a>
+    </div>
+  </section>
+
   <section class="quote" id="orcamento">
     <p class="tag">Orçamento</p>
     <h2>Peça já o seu orçamento</h2>
@@ -490,26 +624,57 @@
         <span class="lbl">Pedir orçamento</span>
       </span>
     </a>
+    <a class="hero-plate wa-plate" href="https://wa.me/351910451649?text=Ol%C3%A1%2C%20preciso%20de%20um%20desentupimento." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.52 3.97 1.52 5.69L.55 23.63l6.07-1.59a11.36 11.36 0 0 0 5.42 1.38h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg>
+      <span>
+        <span class="num">WhatsApp</span><br>
+        <span class="lbl">Enviar fotos do problema</span>
+      </span>
+    </a>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div>
-      <div class="wordmark">Silva Desentupimentos</div>
-      <div class="foot-sub">Desentupimentos de esgoto — Porto · Aveiro · Braga</div>
+    <div class="foot-grid">
+      <div>
+        <span class="logo-chip"><img src="logo.png" width="480" height="266" alt="Silva Desentupimentos" loading="lazy"></span>
+        <div class="foot-sub" style="margin-top:10px">Desentupimentos de esgotos, cozinhas e fossas.</div>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:+351910451649">910 451 649</a></li>
+          <li><a href="https://wa.me/351910451649?text=Ol%C3%A1%2C%20preciso%20de%20um%20desentupimento." target="_blank" rel="noopener">WhatsApp</a></li>
+          <li>Atendimento 24 horas</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Zonas</h4>
+        <ul>
+          <li>Porto e concelhos</li>
+          <li>Aveiro</li>
+          <li>Braga</li>
+        </ul>
+      </div>
     </div>
-    <div>© <span id="year"></span> Todos os direitos reservados.</div>
+    <div class="copy">© <span id="year"></span> Silva Desentupimentos. Todos os direitos reservados.</div>
   </div>
 </footer>
 
 <div class="callbar">
   <div class="callbar-inner">
     <span class="msg">Desentupimentos em Porto, Aveiro e Braga</span>
+    <div class="btns">
+    <a class="btn wa" href="https://wa.me/351910451649?text=Ol%C3%A1%2C%20preciso%20de%20um%20desentupimento." target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 0 1-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.22-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.04.62C5.76.62.65 5.73.65 12.01c0 2.01.52 3.97 1.52 5.69L.55 23.63l6.07-1.59a11.36 11.36 0 0 0 5.42 1.38h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.34-8.06z"/></svg>
+      WhatsApp
+    </a>
     <a class="btn" href="tel:+351910451649">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       910 451 649
     </a>
+    </div>
   </div>
 </div>
 
