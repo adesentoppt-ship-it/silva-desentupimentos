@@ -906,7 +906,18 @@
   } catch(e){}
   var q = location.search + ' ' + document.referrer;
   var anuncio = /gclid|gbraid|wbraid|googleadservices|gad_source/i.test(q);
-  var origem = anuncio ? 'Anúncio Google' : (document.referrer ? document.referrer.replace(/^https?:\/\//,'').split('/')[0] : 'Direto / sem origem');
+  var ORIGENS = { gmb:'Google Meu Negócio (ficha)', maps:'Google Maps', cartao:'Cartão / QR code', whatsapp:'WhatsApp', facebook:'Facebook', instagram:'Instagram', olx:'OLX', carrinha:'Carrinha' };
+  var um = location.search.match(/[?&]utm_source=([^&]+)/i);
+  var ua = navigator.userAgent;
+  var ref = document.referrer ? document.referrer.replace(/^https?:\/\//,'').split('/')[0] : '';
+  var origem = anuncio ? 'Anúncio Google'
+    : um ? (ORIGENS[decodeURIComponent(um[1]).toLowerCase()] || decodeURIComponent(um[1]))
+    : /google\./i.test(ref) ? 'Pesquisa Google (grátis)'
+    : ref ? ref
+    : /FBAN|FBAV|FB_IAB/i.test(ua) ? 'App Facebook'
+    : /Instagram/i.test(ua) ? 'App Instagram'
+    : /WhatsApp/i.test(ua) ? 'App WhatsApp'
+    : 'Direto (escreveu o endereço, favorito, app do Google Maps ou outra app)';
   var disp = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Telemóvel' : 'Computador';
   function hora(){ return new Date().toLocaleTimeString('pt-PT', {hour:'2-digit', minute:'2-digit'}); }
   function enviar(titulo, tags, prioridade){
