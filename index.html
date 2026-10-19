@@ -895,5 +895,41 @@
 
 
 
+<script>
+/* Notificacoes no telemovel (app ntfy, topico privado) - visitas e cliques, sem dados pessoais */
+(function(){
+  var TOPIC = 'silva-hup7j0ctedcrh3';
+  try {
+    if (/[?&]eu=1/.test(location.search)) localStorage.setItem('sou-eu','1');
+    if (/[?&]eu=0/.test(location.search)) localStorage.removeItem('sou-eu');
+    if (localStorage.getItem('sou-eu') === '1') return; // aparelho do dono: nao notifica
+  } catch(e){}
+  var q = location.search + ' ' + document.referrer;
+  var anuncio = /gclid|gbraid|wbraid|googleadservices|gad_source/i.test(q);
+  var origem = anuncio ? 'Anúncio Google' : (document.referrer ? document.referrer.replace(/^https?:\/\//,'').split('/')[0] : 'Direto / sem origem');
+  var disp = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Telemóvel' : 'Computador';
+  function hora(){ return new Date().toLocaleTimeString('pt-PT', {hour:'2-digit', minute:'2-digit'}); }
+  function enviar(titulo, tags, prioridade){
+    try {
+      fetch('https://ntfy.sh/' + TOPIC, {
+        method: 'POST', keepalive: true,
+        body: 'Origem: ' + origem + '\nAparelho: ' + disp + '\nHora: ' + hora(),
+        headers: { 'Title': titulo, 'Tags': tags, 'Priority': prioridade }
+      }).catch(function(){});
+    } catch(e){}
+  }
+  try {
+    if (!sessionStorage.getItem('visita-notificada')) {
+      sessionStorage.setItem('visita-notificada', '1');
+      enviar(anuncio ? 'Visita do ANUNCIO - Silva' : 'Visita no site - Silva', anuncio ? 'moneybag' : 'eyes', '3');
+    }
+  } catch(e) {}
+  document.addEventListener('click', function(e){
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="tel:"]')) enviar('Clicou em LIGAR - Silva', 'telephone_receiver', '4');
+    else if (e.target.closest('a[href*="wa.me/"]')) enviar('Clicou no WHATSAPP - Silva', 'speech_balloon', '4');
+  }, true);
+})();
+</script>
 </body>
 </html>
