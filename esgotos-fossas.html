@@ -9,6 +9,7 @@
   var JANELA_DIAS = 30;       // conta as entradas dos ultimos 30 dias
   var REDIRECIONAR = true;   // true = aparelho marcado ve uma pagina de erro 503 (site fora do ar)
   var TOPICO_NTFY = 'silva-hup7j0ctedcrh3';
+  var TOPICO_BLOQ = 'bloq-67902f8a4156'; // lista partilhada de aparelhos bloqueados (A. DesentopPT + Silva)
   // IPs fixos (internet de casa/empresa) de aparelhos suspeitos ja identificados no Fraud Blocker.
   // Nao pôr aqui IPs moveis (87.196.x etc.) - sao partilhados por muitos clientes.
   var IPS_SUSPEITOS = {
@@ -61,16 +62,35 @@
       }).catch(function () {});
     }
 
-    if (ls.getItem('ads-marcado') && REDIRECIONAR) { bloquear(); return; }
+    var jaBloq = false;
+    if (ls.getItem('ads-marcado') && REDIRECIONAR) { bloquear(); jaBloq = true; }
 
     // 1 pedido por sessao para saber o IP (marca o aparelho se vier de um IP suspeito)
     var ipSess = ss.getItem('ads-ip');
     var tratar = function (ip) {
       if (IPS_SUSPEITOS[ip] && !ls.getItem('ads-marcado')) ls.setItem('ads-marcado', 'IP suspeito ' + ip + ' - ' + IPS_SUSPEITOS[ip]);
-      if (ls.getItem('ads-marcado')) {
-        avisar(ip, ls.getItem('ads-marcado'));
-        if (REDIRECIONAR) bloquear();
-      }
+      var fim = function () {
+        if (ls.getItem('ads-marcado')) {
+          // partilha o IP com o outro site (so uma vez por IP)
+          if (!ls.getItem('ads-partilhado-' + ip)) {
+            ls.setItem('ads-partilhado-' + ip, '1');
+            fetch('https://ntfy.sh/' + TOPICO_BLOQ, { method: 'POST', body: ip, keepalive: true }).catch(function () {});
+          }
+          avisar(ip, ls.getItem('ads-marcado'));
+          if (REDIRECIONAR && !jaBloq) { bloquear(); jaBloq = true; }
+        }
+      };
+      if (ls.getItem('ads-marcado') || ss.getItem('ads-lista-ok')) { fim(); return; }
+      // ve se este IP foi bloqueado no outro site nas ultimas 12 horas
+      fetch('https://ntfy.sh/' + TOPICO_BLOQ + '/json' + String.fromCharCode(63) + 'poll=1&since=12h')
+        .then(function (r) { return r.text(); })
+        .then(function (txt) {
+          ss.setItem('ads-lista-ok', '1');
+          var achou = txt.split('\n').some(function (l) { try { return JSON.parse(l).message === ip; } catch (e) { return false; } });
+          if (achou) ls.setItem('ads-marcado', 'IP bloqueado no outro site: ' + ip);
+          fim();
+        })
+        .catch(fim);
     };
     if (ipSess) tratar(ipSess);
     else fetch('https://api.ipify.org?format=json').then(function (r) { return r.json(); })
