@@ -17,10 +17,18 @@
     '2.81.235.70':  '842cb53a'
   };
   function bloquear() {
-    try { window.stop(); } catch (e) {}
-    document.documentElement.innerHTML = '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>503 Service Unavailable</title>' +
-      '<style>body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;text-align:center;padding:18vh 16px;margin:0}h1{font-size:26px;font-weight:normal;margin:0 0 12px}p{color:#888;font-size:15px}</style></head>' +
-      '<body><h1>503 Service Unavailable</h1><p>O serviço está temporariamente indisponível. Tente novamente mais tarde.</p></body>';
+    var st = document.createElement('style');
+    st.textContent = 'html{visibility:hidden!important;background:#fff!important}';
+    (document.head || document.documentElement).appendChild(st);
+    var mostrar = function () {
+      document.querySelectorAll('link[rel=stylesheet],style').forEach(function (e) { e.parentNode.removeChild(e); });
+      document.title = '503 Service Unavailable';
+      document.body.setAttribute('style', 'font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;text-align:center;padding:18vh 16px;margin:0');
+      document.body.innerHTML = '<h1 style="font-size:26px;font-weight:normal;margin:0 0 12px">503 Service Unavailable</h1>' +
+        '<p style="color:#888;font-size:15px">O serviço está temporariamente indisponível. Tente novamente mais tarde.</p>';
+      setTimeout(function () { if (!/503 Service/.test(document.body.innerText)) mostrar(); }, 1500);
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mostrar); else mostrar();
   }
   if (/[?&]teste503=1/.test(location.search)) { bloquear(); return; }   // so para ver como fica
   try {
