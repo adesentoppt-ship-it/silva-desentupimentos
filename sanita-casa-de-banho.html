@@ -7,7 +7,7 @@
 (function () {
   var MAX_VISITAS = 3;        // mais de 3 entradas pelo anuncio, marca o aparelho
   var JANELA_DIAS = 30;       // conta as entradas dos ultimos 30 dias
-  var REDIRECIONAR = true;    // true = aparelho marcado vai para o google.com
+  var REDIRECIONAR = true;   // true = aparelho marcado ve uma pagina de erro 503 (site fora do ar)
   var TOPICO_NTFY = 'silva-hup7j0ctedcrh3';
   // IPs fixos (internet de casa/empresa) de aparelhos suspeitos ja identificados no Fraud Blocker.
   // Nao pôr aqui IPs moveis (87.196.x etc.) - sao partilhados por muitos clientes.
@@ -16,6 +16,13 @@
     '213.22.125.6': 'f2dfcc3f',
     '2.81.235.70':  '842cb53a'
   };
+  function bloquear() {
+    try { window.stop(); } catch (e) {}
+    document.documentElement.innerHTML = '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>503 Service Unavailable</title>' +
+      '<style>body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;text-align:center;padding:18vh 16px;margin:0}h1{font-size:26px;font-weight:normal;margin:0 0 12px}p{color:#888;font-size:15px}</style></head>' +
+      '<body><h1>503 Service Unavailable</h1><p>O serviço está temporariamente indisponível. Tente novamente mais tarde.</p></body>';
+  }
+  if (/[?&]teste503=1/.test(location.search)) { bloquear(); return; }   // so para ver como fica
   try {
     var ls = window.localStorage, ss = window.sessionStorage;
     if (/[?&]eu=1/.test(location.search)) ls.setItem('sou-eu', '1');
@@ -46,7 +53,7 @@
       }).catch(function () {});
     }
 
-    if (ls.getItem('ads-marcado') && REDIRECIONAR) { location.replace('https://www.google.com'); return; }
+    if (ls.getItem('ads-marcado') && REDIRECIONAR) { bloquear(); return; }
 
     // 1 pedido por sessao para saber o IP (marca o aparelho se vier de um IP suspeito)
     var ipSess = ss.getItem('ads-ip');
@@ -54,7 +61,7 @@
       if (IPS_SUSPEITOS[ip] && !ls.getItem('ads-marcado')) ls.setItem('ads-marcado', 'IP suspeito ' + ip + ' - ' + IPS_SUSPEITOS[ip]);
       if (ls.getItem('ads-marcado')) {
         avisar(ip, ls.getItem('ads-marcado'));
-        if (REDIRECIONAR) location.replace('https://www.google.com');
+        if (REDIRECIONAR) bloquear();
       }
     };
     if (ipSess) tratar(ipSess);
