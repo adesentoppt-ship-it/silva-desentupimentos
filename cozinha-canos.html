@@ -2,102 +2,6 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<script>
-/* Protecao contra cliques repetidos no anuncio - Silva Desentupimentos */
-(function () {
-  var MAX_VISITAS = 2;        // a partir da 3a entrada pelo anuncio, marca o aparelho
-  var JANELA_DIAS = 30;       // conta as entradas dos ultimos 30 dias
-  var REDIRECIONAR = true;   // true = aparelho marcado ve uma pagina de erro 503 (site fora do ar)
-  var TOPICO_NTFY = 'silva-hup7j0ctedcrh3';
-  var TOPICO_BLOQ = 'bloq-67902f8a4156'; // lista partilhada de aparelhos bloqueados (A. DesentopPT + Silva)
-  // IPs fixos (internet de casa/empresa) de aparelhos suspeitos ja identificados no Fraud Blocker.
-  // Nao pôr aqui IPs moveis (87.196.x etc.) - sao partilhados por muitos clientes.
-  var IPS_SUSPEITOS = {
-    '89.152.0.190': 'e47e921c (casa, Gaia)',
-    '213.22.125.6': 'f2dfcc3f',
-    '2.81.235.70':  '842cb53a'
-  };
-  function bloquear() {
-    var st = document.createElement('style');
-    st.textContent = 'html{visibility:hidden!important;background:#fff!important}';
-    (document.head || document.documentElement).appendChild(st);
-    var mostrar = function () {
-      document.querySelectorAll('link[rel=stylesheet],style').forEach(function (e) { e.parentNode.removeChild(e); });
-      document.title = '503 Service Unavailable';
-      document.body.setAttribute('style', 'font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;text-align:center;padding:18vh 16px;margin:0');
-      document.body.innerHTML = '<h1 style="font-size:26px;font-weight:normal;margin:0 0 12px">503 Service Unavailable</h1>' +
-        '<p style="color:#888;font-size:15px">O serviço está temporariamente indisponível. Tente novamente mais tarde.</p>';
-      setTimeout(function () { if (!/503 Service/.test(document.body.innerText)) mostrar(); }, 1500);
-    };
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mostrar); else mostrar();
-  }
-  if (/[?&]teste503=1/.test(location.search)) { bloquear(); return; }   // so para ver como fica
-  try {
-    var ls = window.localStorage, ss = window.sessionStorage;
-    if (/[?&]eu=1/.test(location.search)) ls.setItem('sou-eu', '1');
-    if (ls.getItem('sou-eu') === '1') return;            // dono/equipa: ignora
-
-    var agora = Date.now(), lim = agora - JANELA_DIAS * 864e5;
-    var visitas = JSON.parse(ls.getItem('ads-v') || '[]').filter(function (t) { return t > lim; });
-    var m = location.search.match(/[?&](gclid|gbraid|wbraid)=([^&]+)/);
-    if (m || /[?&]gad_source=/.test(location.search)) {
-      var id = m ? m[2] : String(agora);
-      var vistos = JSON.parse(ls.getItem('ads-ids') || '[]');
-      if (vistos.indexOf(id) < 0) {                       // recarregar a pagina nao conta
-        vistos.push(id); visitas.push(agora);
-        ls.setItem('ads-ids', JSON.stringify(vistos.slice(-20)));
-      }
-    }
-    ls.setItem('ads-v', JSON.stringify(visitas));
-    if (visitas.length > MAX_VISITAS && !ls.getItem('ads-marcado')) ls.setItem('ads-marcado', 'cliques repetidos');
-
-    function avisar(ip, motivo) {
-      if (ss.getItem('ads-avisado')) return;
-      ss.setItem('ads-avisado', '1');
-      fetch('https://ntfy.sh/' + TOPICO_NTFY, {
-        method: 'POST', keepalive: true,
-        headers: { 'Title': 'APARELHO SUSPEITO no site - Silva', 'Tags': 'rotating_light', 'Priority': '5' },
-        body: 'IP atual: ' + ip + '\nMotivo: ' + motivo + '\nEntradas pelo anuncio (30 dias): ' + visitas.length +
-              '\nPagina: ' + location.pathname + '\nHora: ' + new Date().toLocaleTimeString('pt-PT')
-      }).catch(function () {});
-    }
-
-    var jaBloq = false;
-    if (ls.getItem('ads-marcado') && REDIRECIONAR) { bloquear(); jaBloq = true; }
-
-    // 1 pedido por sessao para saber o IP (marca o aparelho se vier de um IP suspeito)
-    var ipSess = ss.getItem('ads-ip');
-    var tratar = function (ip) {
-      if (IPS_SUSPEITOS[ip] && !ls.getItem('ads-marcado')) ls.setItem('ads-marcado', 'IP suspeito ' + ip + ' - ' + IPS_SUSPEITOS[ip]);
-      var fim = function () {
-        if (ls.getItem('ads-marcado')) {
-          // partilha o IP com o outro site (so uma vez por IP)
-          if (!ls.getItem('ads-partilhado-' + ip)) {
-            ls.setItem('ads-partilhado-' + ip, '1');
-            fetch('https://ntfy.sh/' + TOPICO_BLOQ, { method: 'POST', body: ip, keepalive: true }).catch(function () {});
-          }
-          avisar(ip, ls.getItem('ads-marcado'));
-          if (REDIRECIONAR && !jaBloq) { bloquear(); jaBloq = true; }
-        }
-      };
-      if (ls.getItem('ads-marcado') || ss.getItem('ads-lista-ok')) { fim(); return; }
-      // ve se este IP foi bloqueado no outro site nas ultimas 12 horas
-      fetch('https://ntfy.sh/' + TOPICO_BLOQ + '/json' + String.fromCharCode(63) + 'poll=1&since=12h')
-        .then(function (r) { return r.text(); })
-        .then(function (txt) {
-          ss.setItem('ads-lista-ok', '1');
-          var achou = txt.split('\n').some(function (l) { try { return JSON.parse(l).message === ip; } catch (e) { return false; } });
-          if (achou) ls.setItem('ads-marcado', 'IP bloqueado no outro site: ' + ip);
-          fim();
-        })
-        .catch(fim);
-    };
-    if (ipSess) tratar(ipSess);
-    else fetch('https://api.ipify.org?format=json').then(function (r) { return r.json(); })
-      .then(function (d) { ss.setItem('ads-ip', d.ip); tratar(d.ip); }).catch(function () {});
-  } catch (e) {}
-})();
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18370515943"></script>
@@ -106,6 +10,25 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18370515943');
+  // Chamadas reais vindas do anuncio (numero de reencaminhamento Google, 30s+)
+  gtag('config', 'AW-18370515943/F1gLCJeC17AdEOen37dE', {
+    'phone_conversion_number': '966 475 288',
+    'phone_conversion_callback': function(formatted, mobile) {
+      window.__gfn = { f: String(formatted), m: String(mobile).replace(/[^0-9+]/g, '') };
+      var aplicar = function() { window.__trocarNumero && window.__trocarNumero(); };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', aplicar); else aplicar();
+    }
+  });
+  window.__trocarNumero = function() {
+    var g = window.__gfn; if (!g || !document.body) return;
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a) {
+      if (/966\s*475\s*288/.test(a.getAttribute('href'))) a.setAttribute('href', 'tel:' + g.m);
+    });
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) {
+      if (/966\s475\s288/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/966\s475\s288/g, g.f);
+    }
+  };
   // Conversoes separadas: ligacao (tel:) e WhatsApp (wa.me)
   document.addEventListener('click', function(e){
     if (!e.target.closest) return;
