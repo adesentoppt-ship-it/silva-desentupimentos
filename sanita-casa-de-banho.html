@@ -839,7 +839,7 @@
         </ul>
       </div>
     </div>
-    <div class="copy">© <span id="year"></span> Silva Desentupimentos. Todos os direitos reservados.</div>
+    <div class="copy">© <span id="year"></span> Silva Desentupimentos. Todos os direitos reservados. · <a href="/privacidade">Política de Privacidade</a></div>
   </div>
 </footer>
 
@@ -909,6 +909,68 @@
     if (!e.target.closest) return;
     if (e.target.closest('a[href^="tel:"]')) enviar('Clicou em LIGAR - Silva', 'telephone_receiver', '4');
     else if (e.target.closest('a[href*="wa.me/"]')) enviar('Clicou no WHATSAPP - Silva', 'speech_balloon', '4');
+  }, true);
+})();
+</script>
+<script>
+/* Vigilancia de cliques do anuncio (so regista, nunca bloqueia o ecra).
+   Conta apenas entradas vindas do Google Ads (gclid). Testes: abrir o site com ?gclid=TESTE1 */
+(function () {
+  var URL_REGISTO = 'https://script.google.com/macros/s/AKfycbxs3uo2Gzcg__Rum1Ve8X3Q2Z-N1RbQk-4rN0q2y5Qrxcbpp8aEV7Zb9FwbuR7KcZJ3/exec';
+  var FP = 'https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3.4.2/dist/fp.min.js';
+  var p = new URLSearchParams(location.search);
+  var gclid = p.get('gclid') || p.get('gbraid') || p.get('wbraid') || '';
+  var ss = null; try { ss = window.sessionStorage; } catch (e) {}
+  if (gclid && ss) { try { ss.setItem('vig_gclid', gclid); } catch (e) {} }
+  if (!gclid && ss) { try { gclid = ss.getItem('vig_gclid') || ''; } catch (e) {} }
+  if (!gclid) return;                       // visita que nao veio do anuncio: nao regista nada
+  var teste = /^TESTE/i.test(gclid);
+
+  var dadosP = null;
+  function dados() {
+    if (dadosP) return dadosP;
+    var ip = fetch('https://api.ipify.org?format=json')
+      .then(function (r) { return r.json(); }).then(function (j) { return j.ip || ''; })
+      .catch(function () { return ''; });
+    var aparelho = new Promise(function (ok) {
+      var s = document.createElement('script');
+      s.src = FP; s.async = true;
+      s.onload = function () {
+        FingerprintJS.load().then(function (a) { return a.get(); })
+          .then(function (r) { ok(r.visitorId || ''); }).catch(function () { ok(''); });
+      };
+      s.onerror = function () { ok(''); };
+      document.head.appendChild(s);
+    });
+    dadosP = Promise.all([ip, aparelho]).then(function (v) { return { ip: v[0], aparelho: v[1] }; });
+    return dadosP;
+  }
+
+  function enviar(tipo) {
+    dados().then(function (d) {
+      if (!d.ip) return;
+      var corpo = JSON.stringify({
+        site: location.hostname, tipo: tipo, ip: d.ip, aparelho: d.aparelho,
+        pagina: location.pathname, gclid: gclid, browser: navigator.userAgent.slice(0, 200)
+      });
+      try {
+        if (navigator.sendBeacon && navigator.sendBeacon(URL_REGISTO, new Blob([corpo], { type: 'text/plain' }))) return;
+      } catch (e) {}
+      fetch(URL_REGISTO, { method: 'POST', mode: 'no-cors', body: corpo, keepalive: true }).catch(function () {});
+    });
+  }
+
+  // 1 registo por clique no anuncio (recarregar a pagina ou mudar de pagina nao conta outra vez)
+  var chave = 'vig_ok_' + gclid.slice(0, 60);
+  var jaContou = false;
+  try { jaContou = !!(ss && ss.getItem(chave)); if (ss) ss.setItem(chave, '1'); } catch (e) {}
+  if (!jaContou) enviar(teste ? 'teste' : 'entrada_anuncio');
+
+  // Ligar / WhatsApp de quem veio do anuncio (ajuda a separar clientes reais de fraude)
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('a[href^="tel:"]')) enviar('ligar');
+    else if (e.target.closest('a[href*="wa.me/"]')) enviar('whatsapp');
   }, true);
 })();
 </script>
